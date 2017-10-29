@@ -32,4 +32,4 @@ L = Nm*A0;
 H = (s+1)^(n_star-1);
 DmA0 = Dm*A0;
 HD = H*D;
-G = DmA0-HD;
+G = HD - DmA0;
