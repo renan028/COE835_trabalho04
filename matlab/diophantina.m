@@ -39,7 +39,7 @@ G = HD - DmA0;
 theta_n = numG(1);
 
 [numL, ~] = tfdata(L,'v');
-theta_2 = numG(2:end)./numL(2:end)*theta_n;
+theta_2 = numG(2:end) - numL(2:end)*theta_n;
 
 F = L - N*H;
 [numF, ~] = tfdata(F,'v');
