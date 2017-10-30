@@ -14,14 +14,14 @@ y = N/D; % Planta
 
 % --------------------------------------------
 
-[num,den] = tfdata(y,'v');
-index = find(den);
+[numy,deny] = tfdata(y,'v');
+index = find(deny);
 index = index(1);
-n = length(den(index:end)) - 1;
+n = length(deny(index:end)) - 1;
 
-index = find(num);
+index = find(numy);
 index = index(1);
-n_star = n - (length(num(index:end)) - 1);
+n_star = n - (length(numy(index:end)) - 1);
 
 Nm = (s+1)^(n-n_star);
 Dm = (s+2)^n;
@@ -33,3 +33,9 @@ H = (s+1)^(n_star-1);
 DmA0 = Dm*A0;
 HD = H*D;
 G = HD - DmA0;
+
+[numG, ~] = tfdata(G,'v');
+theta_n = numG(1);
+
+[numL, ~] = tfdata(L,'v');
+theta_2 = numG(2:end)./numL(2:end)*theta_n;
