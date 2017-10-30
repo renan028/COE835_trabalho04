@@ -26,6 +26,7 @@ n_star = n - (length(numy(index:end)) - 1);
 Nm = (s+1)^(n-n_star);
 Dm = (s+2)^n;
 ym = Nm/Dm; %Model
+[numym,denym] = tfdata(ym,'v');
 
 A0 = (s+1)^(n_star-1);
 L = Nm*A0;
@@ -39,3 +40,8 @@ theta_n = numG(1);
 
 [numL, ~] = tfdata(L,'v');
 theta_2 = numG(2:end)./numL(2:end)*theta_n;
+
+F = L - N*H;
+[numF, ~] = tfdata(F,'v');
+theta_1 = numF;
+
