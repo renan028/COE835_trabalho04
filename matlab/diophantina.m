@@ -50,7 +50,7 @@ theta_n = G(1);
 theta_2 = G' - L*theta_n;
 theta_2 = (theta_2(2:end))/kp;
 
-F = L - myconv(numy,H);
+F = L - myconv(numy,H');
 theta_1 = F(2:end);
 theta_2n = km/kp;
 end
