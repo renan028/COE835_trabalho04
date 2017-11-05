@@ -1,4 +1,4 @@
-function [theta_1, theta_n, theta_2n, theta_2] = diophantina(y,ym)
+function [theta_1, theta_n, theta_2n, theta_2] = diophantina(y,ym,A0)
 s = tf('s');
 
     function [n, n_star, num, den] = tfprop(y)
@@ -28,7 +28,6 @@ end
 km = numym(1); % Calculating km
 numym = numym/km;
 
-A0 = (s+1)^(n_star-1); % Creating A0
 [A0,~] = tfdata(A0,'v');
 
 L = myconv(numym,A0); % Creating Lambda

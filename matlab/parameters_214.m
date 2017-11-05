@@ -20,7 +20,9 @@ Nm = km*(s+bm);
 Dm = s^2+a1m*s+a0m;
 ym = Nm/Dm; %Model
 
-[theta_1, theta_n, theta_2n, theta_2] = diophantina(y,ym);
+A0 = tf(1); % Creating A0
+
+[theta_1, theta_n, theta_2n, theta_2] = diophantina(y,ym,A0);
 theta_1s = bm-b; 
 theta_ns = (a1-a1m)/kp;
 theta_2ns = km/kp;
