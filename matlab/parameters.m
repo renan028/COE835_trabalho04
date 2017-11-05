@@ -3,18 +3,25 @@ clc
 s = tf('s');
 
 % ------------- Input Parameters -------------
-bp1 = 1;
-bp2 = 2;
-ap1 = -2;
-ap0 = 1;
+kp = 2;
+b = 1;
+a1 = -2;
+a0 = 1;
 
-N = (bp1*s+bp2);
-D = (s^2 + ap1*s +ap0);
-y = N/D; % Planta
+N = kp*(s+b);
+D = (s^2 + a1*s +a0);
+y = N/D; % Plant
 
-
-Nm = (s+1);
-Dm = (s+2)^2;
+km = 1;
+bm = 2;
+a1m = 4;
+a0m = 1;
+Nm = km*(s+bm);
+Dm = s^2+a1m*s+a0m;
 ym = Nm/Dm; %Model
 
 [theta_1, theta_n, theta_2n, theta_2] = diophantina(y,ym);
+theta_1s = bm-b; 
+theta_ns = (a1-a1m)/kp;
+theta_2ns = km/kp;
+theta_2s = ((a0-a0m)-(a1-a1m))/kp;
