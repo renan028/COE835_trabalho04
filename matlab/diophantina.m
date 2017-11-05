@@ -1,47 +1,54 @@
-clear all
-clc
+function [theta_1, theta_n, theta_2n, theta_2] = diophantina(y,ym)
 s = tf('s');
+    function [n, n_star, num, den] = tfprop(y)
+        [num,den] = tfdata(y,'v');
+        index = find(den);
+        index = index(1);
+        n = length(den(index:end)) - 1; % calculating n
 
-% ------------- Input Parameters -------------
-bp1 = 1;
-bp2 = 2;
-ap1 = -2;
-ap0 = 1;
+        index = find(num);
+        index = index(1);
+        n_star = n - (length(num(index:end)) - 1); % calculating n_star
+    end 
 
-N = (bp1*s+bp2);
-D = (s^2 + ap1*s +ap0);
-y = N/D; % Planta
 
-% --------------------------------------------
-
-[numy,deny] = tfdata(y,'v');
-index = find(deny);
-index = index(1);
-n = length(deny(index:end)) - 1;
-
+[n, n_star, numy, deny] = tfprop(y);
 index = find(numy);
 index = index(1);
-n_star = n - (length(numy(index:end)) - 1);
+kp = numy(index); % Calculating kp
 
-Nm = (s+1)^(n-n_star);
-Dm = (s+2)^n;
-ym = Nm/Dm; %Model
-[numym,denym] = tfdata(ym,'v');
+[m, ~, ~,~] = tfprop(ym);
 
-A0 = (s+1)^(n_star-1);
-L = Nm*A0;
-H = (s+1)^(n_star-1);
-DmA0 = Dm*A0;
-HD = H*D;
-G = HD - DmA0;
+if n>m
+    ym = ym*((s+1)^(n-m))/((s+1)^(n-m));
+end
+[~, ~, numym, denym] = tfprop(ym);
+index = find(numym);
+index = index(1);
+km = numym(index); % Calculating km
 
-[numG, ~] = tfdata(G,'v');
-theta_n = numG(1);
+A0 = (s+1)^(n_star-1); % Creating A0
+[A0,~] = tfdata(A0,'v');
 
-[numL, ~] = tfdata(L,'v');
-theta_2 = numG(2:end) - numL(2:end)*theta_n;
+L = conv(numym,A0); % Creating Lambda
+DmA0 = conv(denym, A0);
 
-F = L - N*H;
-[numF, ~] = tfdata(F,'v');
-theta_1 = numF;
+degH = n_star-1; 
+degG = n-1;
+
+A = convmtx(deny',degH+1);
+S = zeros(n_star + n, n_star + n);
+S(1:degG+1,1:degG+1) = -kp*eye(degG+1);
+B = [A S];
+HG = B\DmA0';
+H = HG(1:degH+1);
+G = HG(degH+2:end);
+
+theta_n = G(1);
+theta_2 = G(2:end) - L(2:end)*theta_n;
+
+F = L - conv(numy,H);
+theta_1 = F;
+theta_2n = km/kp;
+end
 
