@@ -1,0 +1,143 @@
+\section{Implementação}
+
+O trabalho consiste em identificar dinamicamente os parâmetros do sistema para plantas de primeira, segunda e terceira ordem. Nesta seção, iremos descrever a implementação em MATLAB dos algoritmos do gradiente normalizado e \textit{least-square} normalizado.
+
+A primeira etapa da implementação é definir as condições iniciais, parâmetros do sistema a serem identificados, função de transferência da planta, filtro e sinal de entrada.
+
+As condições iniciais do sistema são os valores para $y(0)$, $\theta_0$ e $P_0$, este último somente no caso do método \textit{least-squares} normalizado. Consideremos uma planta estável de terceira ordem de forma a exemplificar com o sistema mais geral deste trabalho:
+%
+\begin{gather}
+P(s) \, [y](t) = Z(s) \, [u](t) \, \\
+\nonumber P(s) = (s+0.5)^3 = s^3 + 1.5 s^2 + 0.75s + 0.125 \, \\
+\nonumber Z(s) = (s+0.3)^3 = s^2 + 0.6 s + 0.09 \, \\
+\nonumber \overrightarrow{pz} =
+\begin{bmatrix}
+  z_2 & z_1 & z_0 & p_2 & p_1 & p_0
+\end{bmatrix}
+^\intercal=
+\begin{bmatrix}
+  1 & 0.6 & 0.09 & 1.5 & 0.75 & 0.125
+\end{bmatrix}
+^\intercal \, \\
+\nonumber u(t) = r(t) = \mathrm{dc} + a_1 \, \mathrm{sin}(w_1 \, t) + a_2 \, \mathrm{sin}(w_2 \, t) + a_3 \, \mathrm{sin}(w_3 \, t) \,.
+\end{gather}
+
+O sinal de referência deve possuir pelo menos seis frequências para esse sistema, pois há seis parâmetros desconhecidos (Seção 3.5 - Tao). Sendo assim, foi escolhido um sinal de referência com três senóides de frequências distintas. Além disso, o sistema é dito com excitação persistente se $u(t)$ não possui frequências do regressor $\phi(t)$. 
+%
+Agora, considere o seguinte filtro de terceira ordem:
+%
+\begin{gather}
+\Lambda(s) = (s+1)^3 = s^3+3s^2+3s+1,\\
+\nonumber \vec{\lambda} = 
+\begin{bmatrix}
+  \lambda_2 & \lambda_1 & \lambda_0
+\end{bmatrix}
+^\intercal=
+\begin{bmatrix}
+  3 & 3 & 1
+\end{bmatrix}
+^\intercal \,.
+\end{gather}
+
+O vetor de parâmetros ideais é definido como:
+%
+\begin{gather}
+\theta^* =
+\begin{bmatrix}
+  z_0 & z_1 & z_2 &(\lambda_0-p_0) & (\lambda_1-p_1) & (\lambda_{2}-p_{2})
+\end{bmatrix}
+^\intercal = \\
+\nonumber \theta^* =
+\begin{bmatrix}
+  \textrm{flip}\left(\overrightarrow{pz}(1:3)\right)  & \textrm{flip}\left(\vec{\lambda}-\overrightarrow{pz}(4:6)\right)
+\end{bmatrix}
+^\intercal = \\
+\nonumber \theta^* =
+\begin{bmatrix}
+  0.09 & 0.6 & 1 & 0.875 & 2.25 & 1.5
+\end{bmatrix}
+^\intercal \,.
+\end{gather}
+
+As equações do filtro $\frac{1}{\Lambda(s)}$ podem ser descritas como um sistema no espaço de estados:
+%
+\begin{gather*}
+\omega_1 = 
+\begin{bmatrix}
+  \omega_{11} & \omega_{12} & \omega_{13}
+\end{bmatrix}
+^\intercal \,, \\
+%
+\omega_2 = 
+\begin{bmatrix}
+  \omega_{21} & \omega_{22} & \omega_{23}
+\end{bmatrix}
+^\intercal \,,
+\end{gather*}
+%
+\[
+\begin{cases}
+\dot{\omega}_{11} = \omega_{12}, \\
+\dot{\omega}_{12} = \omega_{13}, \\
+\dot{\omega}_{13} = u - \textrm{flip}(\vec{\lambda})^\intercal \, \omega_1
+\end{cases}
+\]
+
+\[
+\begin{cases}
+\dot{\omega}_{21} = \omega_{22}, \\
+\dot{\omega}_{22} = \omega_{23}, \\
+\dot{\omega}_{23} = y - \textrm{flip}(\vec{\lambda})^\intercal \, \omega_2
+\end{cases}
+\]
+
+Resumidamente:
+%
+\begin{gather}
+\dot{\omega}_1 =
+\begin{bmatrix}
+  \omega_1(2:3) & y - \textrm{flip}(\vec{\lambda})^\intercal \omega_1
+\end{bmatrix}
+^\intercal,\\
+%
+\nonumber \dot{\omega}_2 =
+\begin{bmatrix}
+  \omega_2(2:3) & y - \textrm{flip}(\vec{\lambda})^\intercal \omega_2
+\end{bmatrix}
+^\intercal,\\
+\phi = 
+\begin{bmatrix}
+  \omega_1 & \omega_2
+\end{bmatrix}
+\,.
+\end{gather}
+
+Podemos descrever a saÃ­da estimada e real do sistema pelos filtros:
+%
+\begin{gather}
+y = \theta^{*\intercal} \, \phi \, \\
+\hat{y} = \theta^\intercal \, \phi \, \\
+\epsilon = \hat{y}-y = \tilde{\theta}^\intercal \, \phi \,.
+\end{gather}
+
+Finalmente, descrevemos a atualização de $\theta$, os parâmetros estimados,
+conforme o gradiente normalizado ou pelo método \textit{least-square}:
+%
+\[
+\textrm{Gradiente Normalizado}
+\begin{cases}
+m^2 \leftarrow 1 + \phi^\intercal\phi\\
+\dot{\theta} \leftarrow -\Gamma\ \phi \epsilon / m^2
+\end{cases}
+\]
+
+\[
+\textrm{Least-square Normalizado}
+\begin{cases}
+m^2 \leftarrow 1 + \phi^\intercal P\phi\\
+\dot{\theta} \leftarrow -P \phi \epsilon / m^2\\
+\dot{P} \leftarrow -P \phi \phi^\intercal P / m^2
+\end{cases}
+\]
+
+Observe que no cálculo de $m^2$, fixamos o valor do parâmetro $\kappa$ em 1 para ambos os casos.

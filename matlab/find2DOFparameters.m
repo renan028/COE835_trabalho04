@@ -1,4 +1,4 @@
-function [theta_1, theta_n, theta_2n, theta_2, L] = diophantina(y,ym,A0)
+function [theta_1, theta_n, theta_2n, theta_2, L] = find2DOFparameters(y,ym,A0)
 s = tf('s');
 
     function [n, n_star, num, den] = tfprop(y)
@@ -53,4 +53,3 @@ F = L - myconv(numy,H');
 theta_1 = F(2:end);
 theta_2n = km/kp;
 end
-

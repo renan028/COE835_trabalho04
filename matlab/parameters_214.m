@@ -22,7 +22,7 @@ ym = Nm/Dm; %Model
 
 A0 = tf(1); % Creating A0
 
-[theta_1, theta_n, theta_2n, theta_2, L] = diophantina(y,ym,A0);
+[theta_1, theta_n, theta_2n, theta_2, L] = find2DOFparameters(y,ym,A0);
 theta_1s = bm-b; 
 theta_ns = (a1-a1m)/kp;
 theta_2ns = km/kp;

@@ -1,0 +1,95 @@
+%---------------------------------------------------------------------
+\section{Resumo do Problema}
+
+Neste trabalho, vamos abordar o cálculo dos parâmetros ideais ${\theta^*}^T = \mat{{\theta_1^*}^T & \theta_n^* & {\theta_2^*}^T & {\theta_{2n}^*}^T}$ e o polinômio $\Lambda(s)$ do filtro $\frac{1}{\Lambda(s)}$ utilizados em uma estrutura de dois graus de liberdade (\textit{feedback} + \textit{feedforward}). O objetivo dessa estrutura de controle é fazer com que uma planta \textbf{conhecida} $P(s) = K_p \frac{N(s)}{D(s)}$ se comporte como um modelo de referência $P_m(s) = K_m\frac{N_m(s)}{D_m(s)}$ em regime. A função que calcula esses parâmetros deve ser geral e resolver o problema para qualquer planta de ordem $n$ e grau relativo $n^*$.
+
+A estratégia utilizada é filtrar os sinais disponíveis no sistema (entrada e saída da planta) e usar combinações lineares dos estados dos dois filtros através dos parâmetros $\theta^*$ a serem encontrados. Esses sinais são somados ao sinal de entrada $r$ multiplicado por um ganho $\theta^*_{2n}$ também a ser encontrado.
+%
+O diagrama de blocos da implementação de controle 2DOF pode ser visto na \fref{fig:blocks}.
+%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\columnwidth]{figs/blocks.pdf}
+  \caption{Implementação da estrutura de controle 2DOF geral.}
+  \label{fig:blocks}
+\end{figure}
+
+Nessa estrutura, temos um filtro $\frac{1}{\Lambda(s)}$ atuando sobre a entrada de controle $u$ com:
+%
+\begin{equation}
+\Lambda(s) = s^{n-1} + \lambda_{n-2} \, s^{n-2} + \ldots + \lambda_{1} \, s + \lambda_0 \,, \qquad \text{grau}(\Lambda) = n-1 \,.
+\end{equation}
+
+A dinâmica entre a saída $v_1$ e a entrada $u$ do filtro é dada pela equação de estados:
+%
+\begin{equation}
+\textrm{Filtro 1: \quad}
+\left\{ \begin{array}{l}
+         \dot{\omega}_1 = A_f \, \omega_1 + b_f \, u \\
+         v_1 = {\theta_1^*}^T \omega_1
+        \end{array}
+ \right.
+ \quad \Rightarrow \quad
+ v_1 = \frac{F}{\Lambda} \, u \,,
+\end{equation}
+%
+em que utilizamos a forma canônica controlável para a escolha da matriz $A_f$ e do vetor $b_f$:
+%
+\begin{equation}
+ A_f = \mat{
+ 0 & 1 & 0 & \cdots & 0 & 0 \\
+ 0 & 0 & 1 & \cdots & 0 & 0 \\
+ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+ 0 & 0 & 0 & \cdots & 1 & 0 \\
+ 0 & 0 & 0 & \cdots & 0 & 1 \\
+ -\lambda_{0} & -\lambda_{1} & -\lambda_{2} & \cdots & -\lambda_{n-3} & -\lambda_{n-2} \\
+ } \in \mathbb{R}^{(n-1) \times (n-1)} \,,
+ %
+ \qquad
+ %
+ b_f = \mat{0 \\ 0 \\ \vdots \\ 0 \\ 0 \\ 1} \in \mathbb{R}^{n-1}
+\end{equation}
+
+Resolvendo a equação de estados para encontrar a função de transferência entre $v_1$ e $u$ através de $\frac{F}{\Lambda} = {\theta_1^*}^T \left(sI - A_f \right)^{-1} b_f$, obtém-se:
+%
+\begin{align}
+ F(s) &= f_{n-2} \, s^{n-2} + f_{n-3} \, s^{n-3} + \ldots + f_{1} \, s + f_0 \,, \qquad\qquad \text{grau}(F) = n-2 \nonumber \\
+ &= {\theta_1^*}^T \, \mat{1 & s & s^2 & \cdots & s^{n-3} & s^{n-2}}^T \,,
+\end{align}
+%
+de onde obtém-se que ${\theta_1^*}^T \in \mathbb{R}^{n-1}$ são os coeficientes do polinômio $F(s)$.
+
+Já o segundo filtro recebe como entrada a saída da planta $y$ e contém um termo direto, com a seguinte implementação em espaço de estados:
+%
+\begin{equation}
+\textrm{Filtro 2: \quad}
+\left\{ \begin{array}{l}
+         \dot{\omega}_2 = A_f \, \omega_2 + b_f \, u \\
+         z_2 = {\theta_2^*}^T \omega_2 + \theta_n^* \, y
+        \end{array}
+ \right.
+ \quad \Rightarrow \quad
+ z_2 = \frac{G}{\Lambda} \, y \,,
+\end{equation}
+
+Resolvendo a equação de estados para encontrar a função de transferência entre $z_2$ e $y$ através de $\frac{G}{\Lambda} = {\theta_2^*}^T \left(sI - A_f \right)^{-1} b_f + \theta_n^*$, obtém-se:
+%
+\begin{align}
+ G(s) &= g_{n-1} \, s^{n-1} + g_{n-2} \, s^{n-2} + \ldots + g_{1} \, s + g_0 \,,\qquad\qquad \text{grau}(G) = n-1 \nonumber \\
+ &= {\theta_2^*}^T \, \mat{1 & s & s^2 & \cdots & s^{n-3} & s^{n-2}}^T + \Lambda(s) \, \theta_n^* \,,
+ \label{eq:theta2}
+\end{align}
+
+Sendo ${\theta_2^*}^T = \mat{\theta^*_{2_{(n-1)}} & \theta^*_{2_{(n-2)}} & \cdots & \theta^*_{2_{(2)}} & \theta^*_{2_{(1)}}}$ e tomando somente os coeficientes dos polinômios de \eqref{eq:theta2} em ambos os lados em forma de vetor, temos:
+%
+\begin{equation}
+ \mat{g_{n-1} & g_{n-2} & \cdots & g_1 & g_0} = \mat{\theta_n^* & \left( \theta^*_{2_{(n-1)}} + \theta_n^* \, \lambda_{n-2} \right) & \cdots & \left( \theta^*_{2_{(2)}} + \theta_n^* \, \lambda_{1} \right) & \left( \theta^*_{2_{(1)}} + \theta_n^* \, \lambda_{0} \right)} \,.
+\end{equation}
+%
+de onde é possível obter os valores de $\theta_n^*$ e $\theta_2^*$:
+%
+\begin{align}
+ \theta_n^* &= g_{n-1} \\
+ \theta_2^* &= G(2:\text{end}) - \theta_n^* \, \Lambda(2:\text{end})
+\end{align}
+

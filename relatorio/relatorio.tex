@@ -32,12 +32,15 @@
      
 \input{macros}
 
+%Set normal paragraph spacing
+\setlength\parindent{24pt}
+
 \begin{document}
 %---------------------------------------------------------------------
 \pagestyle{fancy}%
 \renewcommand{\headrulewidth}  {0.4pt}%
 \renewcommand{\footrulewidth}  {0.4pt}%
-\lhead{\bfseries{Relatório do Trabalho 2}}%
+\lhead{\bfseries{Relatório do Trabalho 3}}%
 \chead{}%
 \rhead{\bfseries\thepage}%
 \lfoot{}%
@@ -47,7 +50,7 @@
 \begin{center}
   \huge{COE-835  Controle  adaptativo}  \\[20mm]
 
-  \Large{Simulações do Trabalho 2} \\[20mm]
+  \Large{Trabalho 4} \\[20mm]
 \end{center}
 
 \textbf{Grupo:} \quad \parbox[t]{10cm}{
@@ -56,24 +59,16 @@ Matheus Ferreira dos Reis \\[2mm]
 Renan Salles de Freitas \\[10mm]
 }
 
-\textbf{Algoritmo:} \quad \HI{MRAC Indireto}\\[2mm]
-
-\bigskip%
-Caso: \quad \parbox[t]{10cm}{
-  $~n = 1$ \quad (ordem da planta) \\[2mm]
-  $n^* = 1$ \quad (grau relativo) \\[2mm]
-  $n_p = 1$ \quad (\# de parâmetros) \\[15mm]
-}
+\textbf{Algoritmo:} \quad \HI{Cálculo de Parâmetros para Controle 2DOF}\\[2mm]
 
 %---------------------------------------------------------------------
 \tableofcontents
 \newpage
 %---------------------------------------------------------------------
-\input{resumo} \newpage
-\input{MRAC_indireto}
-\input{diagramas} \newpage
-\input{simulations} \newpage
-\input{discussao} 
+\input{teoria}
+\input{implementacao}
+%\input{resultados}
+%\input{discussao} 
 %---------------------------------------------------------------------
 %\bibliographystyle{agsm}
 %\bibliography{bib,coe736}
