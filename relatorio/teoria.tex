@@ -5,12 +5,19 @@ Neste trabalho, vamos abordar o cálculo dos parâmetros ideais ${\theta^*}^T = \m
 
 A estratégia utilizada é filtrar os sinais disponíveis no sistema (entrada e saída da planta) e usar combinações lineares dos estados dos dois filtros através dos parâmetros $\theta^*$ a serem encontrados. Esses sinais são somados ao sinal de entrada $r$ multiplicado por um ganho $\theta^*_{2n}$ também a ser encontrado.
 %
-O diagrama de blocos da implementação de controle 2DOF pode ser visto na \fref{fig:blocks}.
+O diagrama de blocos da implementação de controle 2DOF pode ser visto na \fref{fig:blocks} e sua forma em estrutura 2DOF é mostrada na figura \fref{fig:blocks_2DOF}.
 %
 \begin{figure}[H]
   \centering
   \includegraphics[width=\columnwidth]{figs/blocks.pdf}
   \caption{Implementação da estrutura de controle 2DOF geral.}
+  \label{fig:blocks}
+\end{figure}
+%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.5\columnwidth]{figs/blocks_2DOF.pdf}
+  \caption{Estrutura de controle 2DOF geral.}
   \label{fig:blocks}
 \end{figure}
 

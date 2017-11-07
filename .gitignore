@@ -4,11 +4,12 @@
 /relatorio/*.out
 /relatorio/*.gz
 /relatorio/*.toc
-/relatorio/*.pdf
+/relatorio/relatorio.pdf
+trabalho-04.pdf
 
 *~
 *.backup
-*.pdf
+## *.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
