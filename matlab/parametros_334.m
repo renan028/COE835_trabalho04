@@ -21,4 +21,4 @@ ym = Nm/Dm; %Model
 
 A0 = (s+1)^2; % Creating A0
 
-[theta_1, theta_n, theta_2n, theta_2] = diophantina(y,ym,A0);
+[theta_1, theta_n, theta_2n, theta_2, L] = diophantina(y,ym,A0);

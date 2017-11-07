@@ -22,10 +22,13 @@ ym = Nm/Dm; %Model
 
 A0 = (s+1)^1; % Creating A0
 
-[theta_1, theta_n, theta_2n, theta_2] = diophantina(y,ym,A0);
+[theta_1, theta_n, theta_2n, theta_2, L] = diophantina(y,ym,A0);
 
-h0 = 2 + a1m - a2;
-g2 = (a1+a2*(2+a1m-a2)-1-a1m*2-a0m)/kp;
-g1 = (a0+a1*(2+a1m-a2)-a1m-a0m*2)/kp;
-g0 = (a0*(2+a1m-a2)-a0m)/kp;
+l0 = L(end);
+l1 = L(end-1);
+
+h0 = l0 + l1 + a1m - a2;
+g2 = (a1+a2*(l0 + l1 +a1m-a2)-l0*l1-a1m*(l0 + l1)-a0m)/kp;
+g1 = (a0+a1*(l0 + l1 +a1m-a2)-a1m*l0*l1-a0m*(l0 + l1))/kp;
+g0 = (a0*(l0 + l1+a1m-a2)-a0m*l0*l1)/kp;
 G = [g2 g1 g0];
