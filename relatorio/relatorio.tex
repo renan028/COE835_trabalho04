@@ -30,10 +30,20 @@
   linkcolor=blue
 }
 
-\usepackage{listings}
+%Matlab code in latex
+\usepackage[final]{listings}
 \usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
-\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mygreen}{RGB}{28,172,0}
 \definecolor{mylilas}{RGB}{170,55,241}
+\lstdefinestyle{myMatlab}
+{
+language=matlab,frame=single, basicstyle=\small\ttfamily,breaklines=true,%
+morekeywords={matlab2tikz}, keywordstyle=\color{blue}, morekeywords=[2]{1}, keywordstyle=[2]{\color{black}}, commentstyle=\color{mygreen}, stringstyle=\color{mylilas}, identifierstyle=\color{black}, showstringspaces=false,%without this there will be a symbol in the places where there is a space
+numbers=left, numberstyle={\scriptsize \color{black}},% size of the numbers
+numbersep=9pt, % this defines how far the numbers are from the text
+% emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+% emph=[2]{word1,word2}, emphstyle=[2]{style},
+}
 
 \input{macros}
 
@@ -73,7 +83,6 @@ Renan Salles de Freitas \\[10mm]
 \input{teoria}
 \input{implementacao}
 %\input{resultados}
-%\input{discussao} 
 %---------------------------------------------------------------------
 %\bibliographystyle{agsm}
 %\bibliography{bib,coe736}

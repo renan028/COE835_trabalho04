@@ -62,6 +62,7 @@ Resolvendo a equação de estados para encontrar a função de transferência entre $
 \begin{align}
  F(s) &= f_{n-2} \, s^{n-2} + f_{n-3} \, s^{n-3} + \ldots + f_{1} \, s + f_0 \,, \qquad\qquad \text{grau}(F) = n-2 \nonumber \\
  &= {\theta_1^*}^T \, \mat{1 & s & s^2 & \cdots & s^{n-3} & s^{n-2}}^T \,,
+ \label{eq:theta_1}
 \end{align}
 %
 de onde obtém-se que ${\theta_1^*}^T \in \mathbb{R}^{n-1}$ são os coeficientes do polinômio $F(s)$.
@@ -96,8 +97,9 @@ Sendo ${\theta_2^*}^T = \mat{\theta^*_{2_{(n-1)}} & \theta^*_{2_{(n-2)}} & \cdot
 de onde é possível obter os valores de $\theta_n^*$ e $\theta_2^*$:
 %
 \begin{align}
- \theta_n^* &= g_{n-1} \\
+ \theta_n^* &= g_{n-1} \label{eq:theta_n} \\
  \theta_2^* &= G(2:\text{end}) - \theta_n^* \, \Lambda(2:\text{end})
+ \label{eq:theta_2}
 \end{align}
 
 Observando a figura~\ref{fig:blocks2}, pode-se calcular a função de
@@ -110,28 +112,42 @@ F)D-k_pNG} = \frac{k_m N_m}{D_m}
 \end{equation}
 
 Podemos reescrever a equação na forma:
+%
 \begin{equation}
 \frac{\theta_{2n}^*k_p\Lambda N}{(\Lambda -
-F)D-k_pNG} = \frac{k_m N_m N A_0}{D_m  N A_0},
+F)D-k_pNG} = \frac{k_m N_m N A_0}{D_m  N A_0} \,,
 \end{equation}
-
+%
 onde $A_0$ é o polinômio do observador. As condições necessárias para a
-solução, igualando o numerador, são $\theta_{2n}^* = \frac{k_m}{k_p}$ e
-$\Lambda = N_m A_0$, $\textrm{grau}(\Lambda) = n-1$, $\textrm{grau}(N_m) =
+solução, igualando o numerador, são:
+%
+\begin{align}
+ \theta_{2n}^* &= \frac{k_m}{k_p} \,, \\
+ \Lambda &= N_m A_0 \,,
+\end{align}
+%
+em que $\textrm{grau}(\Lambda) = n-1$, $\textrm{grau}(N_m) =
 m$ e $\textrm{grau}(A_0) = n-m-1 = n^*-1$.
  
 Analisando agora os denominadores, o cancelamento de $N$ ocorre quando $N$ é um
-fator de $(\Lambda - F)$, isto é, $(\Lambda - F) = N\,H$,
-$\textrm{grau}(\Lambda) = n-1$, $\textrm{grau}(F) = n-2$, $\textrm{grau}(N) = m$ e
+fator de $(\Lambda - F)$, isto é, $(\Lambda - F) = NH$, em que $\textrm{grau}(F) = n-2$, $\textrm{grau}(N) = m$ e
 $\textrm{grau}(H) = n-m-1 = n^*-1$. Após o cancelamento de $N$, deve-se
-resolver a equação Diophantina para os polinômios desconhecidos $H$ e $G$:
-
+resolver a \textit{Equação Diophantina} para os polinômios desconhecidos $H$ e $G$:
+%
 \begin{equation}
-H\,D - k_pG = D_m\,A_0, 
+HD - k_pG = D_mA_0 \,, 
 \end{equation}
-onde $\textrm{grau}(H\,D) = 2n-m-1$, $\textrm{grau}(G)=n-1$,
-$\textrm{grau}(D_m\,A_0)=2n-m-1$ e $H(s)$ é mônico. E, por hipótese,
+%
+onde $\textrm{grau}(HD) = 2n-m-1$, $\textrm{grau}(G)=n-1$,
+$\textrm{grau}(D_mA_0)=2n-m-1$ e $H(s)$ é mônico. E, por hipótese,
 $\textrm{grau}(D)-\textrm{grau}(N)=\textrm{grau}(D_m)-\textrm{grau}(N_m)=n^*$
-(planta e modelo com mesmo grau relativo).
+(grau relativo invariante entre planta e modelo de referência).
 
+Após encontrar os polinômios $G(s)$ e $H(s)$, obtém-se os parâmetros $\theta^*_n$ e $\theta^*_2$ usando \eqref{eq:theta_n} e \eqref{eq:theta_2}, e o polinômio $F(s)$ através de:
+%
+\begin{equation}
+ F(s) = \Lambda(s) - N(s)H(s) \,.
+\end{equation}
+
+Finalmente, é obtido o vetor $\theta^*_1$ usando a equação \eqref{eq:theta_1}.
 

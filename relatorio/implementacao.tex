@@ -1,28 +1,8 @@
 \section{Implementação}
 
-A implementação foi desenvolvida em MATLAB. Foi construída uma função que recebe
-o polinômio do observador $A_0$, a função de transferência da planta
-$k_p \frac{N}{D}$, e a funnção de transferência do modelo $k_m \frac{N_m}{D_m}$.
-A função retornna os parâmetros ideias ${\theta^*}^T = \mat{{\theta_1^*}^T &
-\theta_n^* & {\theta_2^*}^T & {\theta_{2n}^*}^T}$ e o polinômio $\Lambda(s)$ do
-filtro.
+A implementação foi desenvolvida em MATLAB, de forma numérica. Foi construída uma função que recebe a função de transferência da planta $P(s) = k_p \frac{N}{D}$, a função de transferência do modelo $P_m(s) = k_m \frac{N_m}{D_m}$ e o polinômio do observador $A_0$.
+%
+A função \textit{find2DOFparameters} retorna os parâmetros ideais ${\theta^*}^T = \mat{{\theta_1^*}^T & \theta_n^* & {\theta_2^*}^T & {\theta_{2n}^*}^T}$ e o polinômio $\Lambda(s)$ do filtro para fins de implementação. Seu código é apresentado abaixo:
 
-\lstset{language=Matlab,%
-    %basicstyle=\color{red},
-    breaklines=true,%
-    morekeywords={matlab2tikz},
-    keywordstyle=\color{blue},%
-    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
-    identifierstyle=\color{black},%
-    stringstyle=\color{mylilas},
-    commentstyle=\color{mygreen},%
-    showstringspaces=false,%without this there will be a symbol in the places where there is a space
-    numbers=left,%
-    numberstyle={\tiny \color{black}},% size of the numbers
-    numbersep=9pt, % this defines how far the numbers are from the text
-    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
-    %emph=[2]{word1,word2}, emphstyle=[2]{style},    
-}
-
-
-\lstinputlisting{../matlab/find2DOFparameters.m}  
+\lstinputlisting[style=myMatlab]{../matlab/find2DOFparameters.m}
+%[style=myMatlab,escapechar=!,float=htb]
