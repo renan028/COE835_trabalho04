@@ -27,3 +27,6 @@ theta_1s = bm-b;
 theta_ns = (a1-a1m)/kp;
 theta_2ns = km/kp;
 theta_2s = ((a0-a0m)-L(end)*(a1-a1m))/kp;
+
+%Check result
+Pm = calculate2DOFmodelTF(y, theta_1, theta_n, theta_2n, theta_2, L);

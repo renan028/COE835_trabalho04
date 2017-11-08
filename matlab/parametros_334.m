@@ -22,3 +22,6 @@ ym = Nm/Dm; %Model
 A0 = (s+1)^2; % Creating A0
 
 [theta_1, theta_n, theta_2n, theta_2, L] = find2DOFparameters(y,ym,A0);
+
+%Check result
+Pm = calculate2DOFmodelTF(y, theta_1, theta_n, theta_2n, theta_2, L);

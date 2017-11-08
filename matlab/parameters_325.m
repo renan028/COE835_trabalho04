@@ -32,3 +32,6 @@ g2 = (a1+a2*(l0 + l1 +a1m-a2)-l0*l1-a1m*(l0 + l1)-a0m)/kp;
 g1 = (a0+a1*(l0 + l1 +a1m-a2)-a1m*l0*l1-a0m*(l0 + l1))/kp;
 g0 = (a0*(l0 + l1+a1m-a2)-a0m*l0*l1)/kp;
 G = [g2 g1 g0];
+
+%Check result
+Pm = calculate2DOFmodelTF(y, theta_1, theta_n, theta_2n, theta_2, L);

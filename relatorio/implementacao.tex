@@ -2,7 +2,11 @@
 
 A implementação foi desenvolvida em MATLAB, de forma numérica. Foi construída uma função que recebe a função de transferência da planta $P(s) = k_p \frac{N}{D}$, a função de transferência do modelo $P_m(s) = k_m \frac{N_m}{D_m}$ e o polinômio do observador $A_0$.
 %
-A função \textit{find2DOFparameters} retorna os parâmetros ideais ${\theta^*}^T = \mat{{\theta_1^*}^T & \theta_n^* & {\theta_2^*}^T & {\theta_{2n}^*}^T}$ e o polinômio $\Lambda(s)$ do filtro para fins de implementação. Seu código é apresentado abaixo:
+A função \textit{find2DOFparameters} retorna os parâmetros ideais ${\theta^*}^T = \mat{{\theta_1^*}^T & \theta_n^* & {\theta_2^*}^T & {\theta_{2n}^*}^T}$ e o polinômio $\Lambda(s)$ do filtro para fins de implementação. Seu código é apresentado abaixo:\\
 
 \lstinputlisting[style=myMatlab]{../matlab/find2DOFparameters.m}
 %[style=myMatlab,escapechar=!,float=htb]
+
+A fim de conferir o resultado gerado pela função \textit{find2DOFparameters}, desenvolvemos também a função \textit{calculate2DOFmodelTF} que faz o processo inverso. A partir dos valores de $\theta^*$, $\Lambda(s)$ e a planta $P(s)$, a função calcula a função de transferência do modelo de refrência. Seu código é apresentado abaixo:\\
+
+\lstinputlisting[style=myMatlab]{../matlab/calculate2DOFmodelTF.m}
