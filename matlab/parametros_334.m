@@ -13,10 +13,11 @@ D = (s^3 + a2*s^2 + a1*s +a0);
 y = N/D; % Plant
 
 km = 1;
+a2m = 2;
 a1m = 4;
 a0m = 1;
 Nm = km;
-Dm = s^3 + a1m*s + a0m;
+Dm = s^3 + a2m*s^2 + a1m*s + a0m;
 ym = Nm/Dm; %Model
 
 A0 = (s+1)^2; % Creating A0

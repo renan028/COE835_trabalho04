@@ -1,10 +1,78 @@
 %---------------------------------------------------------------------
 \section{Resultados}
 
-Avaliamos o funcionamento da função que calcula os parâmetros ideais de controle 2DOF plantas de ordens e gruas relativos distintos, assim como diferentes polinômios $A_0$ para o observador.
+Avaliamos o funcionamento da função que calcula os parâmetros ideais de controle 2DOF plantas de ordens e graus relativos distintos, assim como diferentes polinômios $A_0$ para o observador. 
+%
+Abaixo, fornecemos três exemplos para plantas de grau relativo $n^{*} = 1, 2, 3$ e a função de transferência do modelo calculada a partir da função \textit{calculate2DOFmodelTF.m}. Para todas as três plantas consideradas, obtivemos exatamente a mesma função de transferência escolhida inicialmente como modelo de referência, o que mostra a corretude do algoritmo.
 
-\subsection{Simulação \#1}
+%---------------------------------------------------------------------
+\subsection{Simulação \#1 ($n = 2, n^{*} = 1$)}
 
 \begin{align*}
   P(s) &= \frac{2s+2}{s^2 -2s + 1}\,,  &  P_m(s) &= \frac{s+2}{s^2 + 4s + 1}\,, & A_0(s) &= 1 \,,
 \end{align*}
+%
+Script de teste:
+%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/script1.png}
+  \label{fig:script1}
+\end{figure}
+%
+Saída da função \textit{calculate2DOFmodelTF.m}:
+%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.2\textwidth]{figs/exemplo1.png}
+  \label{fig:exemplo1}
+\end{figure}
+
+%---------------------------------------------------------------------
+\subsection{Simulação \#2 ($n = 3, n^{*} = 2$)}
+
+\begin{align*}
+  P(s) &= \frac{2s+2}{s^3 +s^2 -2s + 1}\,,  &  P_m(s) &= \frac{1}{s^2 + 4s + 1}\,, & A_0(s) &= s+1 \,,
+\end{align*}
+%
+Script de teste:
+%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/script2.png}
+  \label{fig:script2}
+\end{figure}
+%
+Saída da função \textit{calculate2DOFmodelTF.m}:
+%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.2\textwidth]{figs/exemplo2.png}
+  \label{fig:exemplo2}
+\end{figure}
+
+\newpage
+%---------------------------------------------------------------------
+\subsection{Simulação \#3 ($n = 3, n^{*} = 3$)}
+
+\begin{align*}
+  P(s) &= \frac{1}{s^3 + s^2 -2s + 1}\,,  &  P_m(s) &= \frac{1}{s^3 +2s^2 + 4s + 1}\,, & A_0(s) &= (s+1)^2 \,,
+\end{align*}
+%
+Script de teste:
+%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/script3.png}
+  \label{fig:script3}
+\end{figure}
+%
+Saída da função \textit{calculate2DOFmodelTF.m}:
+%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.25\textwidth]{figs/exemplo3.png}
+  \label{fig:exemplo3}
+\end{figure}
+
+
