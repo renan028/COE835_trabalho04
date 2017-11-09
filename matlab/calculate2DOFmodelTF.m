@@ -30,9 +30,9 @@ bf = zeros(n-1,1);
 bf(end) = 1;
 
 %Filters
-C1 = theta_1;
+C1 = flip(theta_1);
 D1 = 0;
-C2 = theta_2;
+C2 = flip(theta_2);
 D2 = theta_n;
 
 % Calculate F, G and Lambda
@@ -53,7 +53,16 @@ elseif l1 < l2
 end
 
 Dm = LmFD - KpNG;
+
 Pm = tf(Nm,Dm);
-Pm = minreal(Pm);
+tol = 1e-5;
+Pm = minreal(Pm,tol); %cancels equal poles and zeros
+
+%Eliminate infinitesimal differences
+[num,den] = tfdata(Pm);
+num = round(num{1},5);
+den = round(den{1},5);
+
+Pm = tf(num,den);
 
 end
