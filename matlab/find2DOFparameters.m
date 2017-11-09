@@ -1,4 +1,4 @@
-function [theta_1, theta_n, theta_2n, theta_2, L] = find2DOFparameters(P,Pm,A0)
+function [theta_1, theta_n, theta_2, theta_2n, L] = find2DOFparameters(P,Pm,A0)
 s = tf('s');
 
     %Extract transfer function properties

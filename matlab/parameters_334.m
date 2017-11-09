@@ -3,24 +3,24 @@ s = tf('s');
 
 %Plant TF
 kp = 2;
-b0 = 1;
 a2 = 1;
 a1 = -2;
 a0 = 1;
-N = kp*(s+b0);
+N = kp;
 D = (s^3 + a2*s^2 + a1*s +a0);
 y = N/D;
 
 %Model TF
 km = 1;
+a2m = 2;
 a1m = 4;
 a0m = 1;
 Nm = km;
-Dm = s^2 + a1m*s + a0m;
+Dm = s^3 + a2m*s^2 + a1m*s + a0m;
 ym = Nm/Dm;
 
 %Observer
-A0 = (s+1)^1;
+A0 = (s+1)^2;
 
 %Find 2DOF control parameters
 [theta_1, theta_n, theta_2, theta_2n, L] = find2DOFparameters(y,ym,A0);

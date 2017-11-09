@@ -7,6 +7,12 @@ A função \textit{find2DOFparameters} retorna os parâmetros ideais ${\theta^*}^T 
 \lstinputlisting[style=myMatlab]{../matlab/find2DOFparameters.m}
 %[style=myMatlab,escapechar=!,float=htb]
 
-A fim de conferir o resultado gerado pela função \textit{find2DOFparameters}, desenvolvemos também a função \textit{calculate2DOFmodelTF} que faz o processo inverso. A partir dos valores de $\theta^*$, $\Lambda(s)$ e a planta $P(s)$, a função calcula a função de transferência do modelo de refrência. Seu código é apresentado abaixo:\\
+A fim de conferir o resultado gerado pela função \textit{find2DOFparameters}, desenvolvemos também a função \textit{calculate2DOFmodelTF} que faz o processo inverso. A partir dos valores de $\theta^*$, $\Lambda(s)$ e a planta $P(s)$, a função calcula a função de transferência do sistema 2DOF em malha fechada, ou seja:
+
+\begin{equation}
+\frac{Y(s)}{R(s)} = \frac{\theta^*_{2n} k_p \Lambda N}{\left( \Lambda - F \right) - k_pNG} = \frac{k_m N_m N A_0}{D_m N A_0} = \frac{k_m N_m}{D_m} = P_m(s)
+\end{equation}
+
+Seu código é apresentado abaixo:
 
 \lstinputlisting[style=myMatlab]{../matlab/calculate2DOFmodelTF.m}

@@ -1,32 +1,36 @@
-clear all
-clc
+clear; clc;
 s = tf('s');
 
-% ------------- Input Parameters -------------
+%Plant TF
 kp = 2;
-b = 1;
+b0 = 1;
 a1 = -2;
 a0 = 1;
-
-N = kp*(s+b);
+N = kp*(s+b0);
 D = (s^2 + a1*s +a0);
-y = N/D; % Plant
+y = N/D;
 
+%Model TF
 km = 1;
-bm = 2;
+b0m = 2;
 a1m = 4;
 a0m = 1;
-Nm = km*(s+bm);
+Nm = km*(s+b0m);
 Dm = s^2+a1m*s+a0m;
-ym = Nm/Dm; %Model
+ym = Nm/Dm;
 
-A0 = tf(1); % Creating A0
+%Observer
+A0 = tf(1);
 
-[theta_1, theta_n, theta_2n, theta_2, L] = find2DOFparameters(y,ym,A0);
-theta_1s = bm-b; 
-theta_ns = (a1-a1m)/kp;
-theta_2ns = km/kp;
-theta_2s = ((a0-a0m)-L(end)*(a1-a1m))/kp;
+%Find 2DOF control parameters
+[theta_1, theta_n, theta_2, theta_2n, L] = find2DOFparameters(y,ym,A0);
 
-%Check result
-Pm = calculate2DOFmodelTF(y, theta_1, theta_n, theta_2n, theta_2, L);
+%Check the result
+Pm = calculate2DOFmodelTF(y, theta_1, theta_n, theta_2, theta_2n, L);
+[num,~] = tfdata(ym - Pm);
+num = num{1};
+if num == 0
+    fprintf('Simulation successful!\n');
+else
+    fprintf('Simulation unsuccessful...\n');
+end

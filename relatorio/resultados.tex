@@ -6,73 +6,87 @@ Avaliamos o funcionamento da função que calcula os parâmetros ideais de controle
 Abaixo, fornecemos três exemplos para plantas de grau relativo $n^{*} = 1, 2, 3$ e a função de transferência do modelo calculada a partir da função \textit{calculate2DOFmodelTF.m}. Para todas as três plantas consideradas, obtivemos exatamente a mesma função de transferência escolhida inicialmente como modelo de referência, o que mostra a corretude do algoritmo.
 
 %---------------------------------------------------------------------
-\subsection{Simulação \#1 ($n = 2, n^{*} = 1$)}
+\subsection{Simulação \#1 ($n = 2, n^{*} = 1, n_p = 4$)}
 
 \begin{align*}
-  P(s) &= \frac{2s+2}{s^2 -2s + 1}\,,  &  P_m(s) &= \frac{s+2}{s^2 + 4s + 1}\,, & A_0(s) &= 1 \,,
+  P(s) &= \frac{2\left(s+1\right)}{s^2 -2s + 1}\,,  &  P_m(s) &= \frac{s+2}{s^2 + 4s + 1}\,, & A_0(s) &= 1
 \end{align*}
+
+Script de teste \textit{parameters\_214}:
 %
-Script de teste:
+\lstinputlisting[style=myMatlab]{../matlab/parameters_214.m}
+
+A função \textit{find2DOFparameters} retornou os seguintes valores:
 %
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figs/script1.png}
-  \label{fig:script1}
-\end{figure}
+\begin{align*}
+ \theta_1^* = 1 \,, \qquad \theta_n^* = -3 \,, \qquad \theta_2^* = 6 \,, \qquad \theta_{2n}^* = 0.5 \qquad \Lambda(s) = s + 2
+\end{align*}
+
 %
-Saída da função \textit{calculate2DOFmodelTF.m}:
+A saída da função \textit{calculate2DOFmodelTF} comprovou que esses valores encontrados resultam em $Y(s)/R(s) = P_m(s)$, igual ao modelo de referência proposto, dada a planta $P(s)$.
 %
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.2\textwidth]{figs/exemplo1.png}
-  \label{fig:exemplo1}
-\end{figure}
 
 %---------------------------------------------------------------------
-\subsection{Simulação \#2 ($n = 3, n^{*} = 2$)}
+\subsection{Simulação \#2 ($n = 3, n^{*} = 2, n_p = 5$)}
 
 \begin{align*}
-  P(s) &= \frac{2s+2}{s^3 +s^2 -2s + 1}\,,  &  P_m(s) &= \frac{1}{s^2 + 4s + 1}\,, & A_0(s) &= s+1 \,,
+  P(s) &= \frac{2\left(s+1\right)}{s^3 +s^2 -2s + 1}\,,  &  P_m(s) &= \frac{1}{s^2 + 4s + 1}\,, & A_0(s) &= s+1
 \end{align*}
-%
-Script de teste:
-%
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figs/script2.png}
-  \label{fig:script2}
-\end{figure}
-%
-Saída da função \textit{calculate2DOFmodelTF.m}:
-%
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.2\textwidth]{figs/exemplo2.png}
-  \label{fig:exemplo2}
-\end{figure}
 
-\newpage
+Script de teste \textit{parameters\_325}:
+%
+\lstinputlisting[style=myMatlab]{../matlab/parameters_325.m}
+
+A função \textit{find2DOFparameters} retornou os seguintes valores:
+%
+\begin{align*}
+ {\theta_1^*}^T = \mat{-4 & -4} \,, \qquad \theta_n^* = -3.5 \,, \qquad {\theta_2^*}^T = \mat{-0.5 & 5.5} \,, \qquad \theta_{2n}^* = 0.5 \qquad \Lambda(s) = s^2 + 2s + 1
+\end{align*}
+
+%
+A saída da função \textit{calculate2DOFmodelTF} comprovou que esses valores encontrados resultam em $Y(s)/R(s) = P_m(s)$, igual ao modelo de referência proposto, dada a planta $P(s)$.
+
 %---------------------------------------------------------------------
-\subsection{Simulação \#3 ($n = 3, n^{*} = 3$)}
+\subsection{Simulação \#3 ($n = 3, n^{*} = 3, n_p = 4$)}
 
 \begin{align*}
-  P(s) &= \frac{1}{s^3 + s^2 -2s + 1}\,,  &  P_m(s) &= \frac{1}{s^3 +2s^2 + 4s + 1}\,, & A_0(s) &= (s+1)^2 \,,
+  P(s) &= \frac{1}{s^3 + s^2 -2s + 1}\,,  &  P_m(s) &= \frac{1}{s^3 +2s^2 + 4s + 1}\,, & A_0(s) &= s^2 + 2s + 1
 \end{align*}
 %
-Script de teste:
-%
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figs/script3.png}
-  \label{fig:script3}
-\end{figure}
-%
-Saída da função \textit{calculate2DOFmodelTF.m}:
-%
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.25\textwidth]{figs/exemplo3.png}
-  \label{fig:exemplo3}
-\end{figure}
 
+Script de teste \textit{parameters\_334}:
+%
+\lstinputlisting[style=myMatlab]{../matlab/parameters_334.m}
 
+A função \textit{find2DOFparameters} retornou os seguintes valores:
+%
+\begin{align*}
+ {\theta_1^*}^T = \mat{-1 & -7} \,, \qquad \theta_n^* = -4 \,, \qquad {\theta_2^*}^T = \mat{-1.5 & 7.5} \,, \qquad \theta_{2n}^* = 0.5 \qquad \Lambda(s) = s^2 + 2s + 1
+\end{align*}
+
+%
+A saída da função \textit{calculate2DOFmodelTF} comprovou que esses valores encontrados resultam em $Y(s)/R(s) = P_m(s)$, igual ao modelo de referência proposto, dada a planta $P(s)$.
+
+%---------------------------------------------------------------------
+\subsection{Simulação \#4 ($n = 7, n^{*} = 4, n_p = 11$)}
+
+\begin{align*}
+  P(s) &= \frac{3\left(s^3 + 4s^2 + 2s + 4\right)}{s^7 + 3s^6 + s^5 - 2s^4 + 6s^2 -2s + 4}\,,  &  P_m(s) &= \frac{1.5 \left(s+2\right)}{s^5 + 5s^4 + 10.75s^3 +12.25s^2 + 7s + 1.5}\,, \\
+  A_0(s) &= s^2 + 2s + 1
+\end{align*}
+%
+
+Script de teste \textit{parameters\_7411}:
+%
+\lstinputlisting[style=myMatlab]{../matlab/parameters_7411.m}
+
+A função \textit{find2DOFparameters} retornou os seguintes valores:
+%
+\begin{align*}
+ {\theta_1^*}^T &= \mat{-4 & -33.75 & -132.75 & -249.5 & -183.5 & -197} \,, & \theta_n^* &= -23.917 \,, \\
+ {\theta_2^*}^T &= \mat{72.667 & 372.25 & 709.333 & 670.167 & 256.75 & 113.667} \,, & \theta_{2n}^* &= 0.5 \,, \\
+ \Lambda(s) &= s^6 + 7s^5 + 20s^4 + 30s^3 + 25s^2 + 11s + 2
+\end{align*}
+
+%
+A saída da função \textit{calculate2DOFmodelTF} comprovou que esses valores encontrados resultam em $Y(s)/R(s) = P_m(s)$, igual ao modelo de referência proposto, dada a planta $P(s)$.
